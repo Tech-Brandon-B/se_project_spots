@@ -7,6 +7,7 @@
 - Figma
 - Images
 - Deployment
+- Video
 
 **Intro**
 
@@ -33,3 +34,7 @@ I used the images on the Figma project layout. I downloaded them as an .svg or .
 - This webpage is deployed to GitHub Pages
 
 - [Deployment Link](https://tech-brandon-b.github.io/se_project_spots/)
+
+**Video**
+
+- https://drive.google.com/file/d/16s3dwYL_qZeDKuGM9vB0BqMC0dYfOZYg/view?usp=sharing
