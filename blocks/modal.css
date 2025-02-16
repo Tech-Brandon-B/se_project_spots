@@ -23,6 +23,7 @@
   max-width: 730px;
   width: 100%;
   box-sizing: border-box;
+  border-radius: 8px;
   position: relative;
 }
 
@@ -94,6 +95,7 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 1;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 627px) {
