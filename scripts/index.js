@@ -94,20 +94,21 @@ function closeModal(modal) {
   modal.classList.remove("modal_opened");
 }
 
-function handleEditFormSubmit() {
+function handleEditFormSubmit(event) {
   event.preventDefault();
   profileName.textContent = editModalNameInput.value;
   profileDesc.textContent = editModalDescInput.value;
   closeModal(editModal);
 }
 
-function handleAddCardSubmit() {
+function handleAddCardSubmit(event) {
   event.preventDefault();
   const inputValues = {
     name: cardModalNameInput.value,
     link: cardModalLinkInput.value,
   };
   const cardElement = getCardElement(inputValues);
+  EventTarget.target.rest();
   cardsList.prepend(cardElement);
   closeModal(cardModal);
 }
@@ -129,9 +130,6 @@ cardModalCloseBtn.addEventListener("click", () => {
 });
 previewModalCloseBtn.addEventListener("click", () => {
   closeModal(previewModal);
-});
-document.addEventListener("click", (event) => {
-  console.log("Clicked element:", event.target);
 });
 
 editFormElement.addEventListener("submit", handleEditFormSubmit);

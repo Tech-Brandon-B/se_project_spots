@@ -67,7 +67,7 @@
   background-image: url(../images/closeIcon.svg);
   position: absolute;
   top: 0;
-  right: 12.5px;
+  right: -32px;
   opacity: 100%;
   cursor: pointer;
   z-index: 2;
