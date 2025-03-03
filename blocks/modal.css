@@ -11,13 +11,14 @@
   justify-content: center;
   visibility: hidden;
   padding: 0 20px;
-  transition: visibility 0s linear 0.5s, opacity 0.5s linear;
+  transition: opacity 0.5s linear, visibility 0s linear 0.5s;
   opacity: 0;
 }
 
 .modal_opened {
   visibility: visible;
   opacity: 1;
+  transition: opacity 0.5s linear;
 }
 
 .modal__container {
@@ -138,6 +139,7 @@
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 627px) {
@@ -147,6 +149,10 @@
 
   .modal__container {
     padding: 12px;
+  }
+
+  .modal__image {
+    border-radius: 4px;
   }
 
   .modal__title {

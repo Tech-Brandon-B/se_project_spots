@@ -108,7 +108,7 @@ function handleAddCardSubmit(event) {
     link: cardModalLinkInput.value,
   };
   const cardElement = getCardElement(inputValues);
-  EventTarget.target.rest();
+  event.target.reset();
   cardsList.prepend(cardElement);
   closeModal(cardModal);
 }
