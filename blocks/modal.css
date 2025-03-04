@@ -133,6 +133,7 @@
 .modal__caption {
   height: 32px;
   margin: 0;
+  padding: 4px 8px;
   background-color: #212121;
   border-radius: 8px;
   color: #fff;
@@ -151,7 +152,14 @@
     padding: 12px;
   }
 
+  .modal__container_type_preview {
+    width: 288px;
+    padding: 0;
+    max-width: 100%;
+  }
+
   .modal__image {
+    width: 288px;
     border-radius: 4px;
   }
 
@@ -164,6 +172,13 @@
     top: 12px;
     right: 12px;
   }
+
+  .modal__close-btn_type_preview {
+    top: -48px;
+    right: 0;
+    padding: 0;
+  }
+
   .modal__label {
     margin-bottom: 24px;
   }
