@@ -117,6 +117,14 @@
   opacity: 100%;
 }
 
+.modal__error {
+  display: block;
+  color: #ff0000;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 110.00000000000001%;
+}
+
 .modal__submit-btn {
   width: 156px;
   height: 52px;
