@@ -140,6 +140,16 @@ editModalCloseBtn.addEventListener("click", () => {
   closeModal(editModal);
 });
 
+const popups = document.querySelectorAll(".modal");
+
+popups.forEach((popup) => {
+  popup.addEventListener("mousedown", (evt) => {
+    if (evt.target.classList.contains("modal_opened")) {
+      closeModal(popup);
+    }
+  });
+});
+
 cardModalButton.addEventListener("click", () => {
   openModal(cardModal);
 });
