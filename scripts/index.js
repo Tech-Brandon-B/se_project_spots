@@ -87,12 +87,23 @@ function getCardElement(data) {
   return cardElement;
 }
 
+function keyHandler(evt) {
+  if (evt.key === "Escape") {
+    const openedModal = document.querySelector(".modal_opened");
+    if (openedModal) {
+      closeModal(openedModal);
+    }
+  }
+}
+
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("keydown", keyHandler);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", keyHandler);
 }
 
 function handleEditFormSubmit(event) {
