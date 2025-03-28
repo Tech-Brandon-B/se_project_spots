@@ -121,7 +121,6 @@ function handleAddCardSubmit(event) {
   };
   const cardElement = getCardElement(inputValues);
   event.target.reset();
-  disabledButton(cardModalSubmitBtn, settings);
   cardsList.prepend(cardElement);
   closeModal(cardModal);
 }
