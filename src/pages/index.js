@@ -8,7 +8,7 @@ import {
   settings,
   resetValidation,
 } from "../scripts/validation.js";
-import Api from "../scripts/Api.js";
+import Api from "../utils/Api.js";
 
 // const initialCards = [
 //   {
@@ -45,12 +45,19 @@ const api = new Api({
   },
 });
 
-api.getInitialCards().then((cards) => {
-  cards.forEach((item) => {
-    const cardElement = getCardElement(item);
-    cardsList.prepend(cardElement);
-  });
-});
+api
+  .getAppInfo()
+  .then(([cards, userData]) => {
+    profileName.textContent = userData.name;
+    profileDesc.textContent = userData.about;
+    profileImg.src = userData.avatar;
+
+    cards.forEach((item) => {
+      const cardElement = getCardElement(item);
+      cardsList.prepend(cardElement);
+    });
+  })
+  .catch(console.error);
 
 const profileImg = document.getElementById("profile-avatar");
 profileImg.src = profileSrc;
@@ -144,9 +151,26 @@ function closeModal(modal) {
 
 function handleEditFormSubmit(event) {
   event.preventDefault();
-  profileName.textContent = editModalNameInput.value;
-  profileDesc.textContent = editModalDescInput.value;
-  closeModal(editModal);
+  const submitButton = editFormElement.querySelector(".modal__submit-btn");
+  const originalButtonText = submitButton.textContent;
+  submitButton.textContent = "Saving...";
+
+  api
+    .editUserInfo({
+      name: editModalNameInput.value,
+      about: editModalDescInput.value,
+    })
+    .then((userData) => {
+      profileName.textContent = userData.name;
+      profileDesc.textContent = userData.about;
+      closeModal(editModal);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      submitButton.textContent = originalButtonText;
+    });
 }
 
 function handleAddCardSubmit(event) {
