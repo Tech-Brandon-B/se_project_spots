@@ -161,6 +161,17 @@
   overflow: hidden;
 }
 
+.modal__button-container {
+  display: flex;
+  gap: 12px;
+}
+
+.modal__submit-btn_type_secondary {
+  background-color: transparent;
+  color: #212121;
+  gap: 12px;
+}
+
 @media screen and (max-width: 627px) {
   .modal {
     padding: 0 16px;

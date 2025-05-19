@@ -2,6 +2,7 @@ import profileSrc from "../images/avatar.jpg";
 import logoSrc from "../images/logo.svg";
 import pencilSrc from "../images/pencil.svg";
 import plusSrc from "../images/plus.svg";
+import pencilLightSrc from "../images/pencil-light.svg";
 import "./index.css";
 import {
   enableValidation,
@@ -67,6 +68,8 @@ const pencilImg = document.getElementById("pencil-img");
 pencilImg.src = pencilSrc;
 const plusImg = document.getElementById("plus-img");
 plusImg.src = plusSrc;
+const pencilLightImg = document.getElementById("pencil-light");
+pencilLightImg.src = pencilLightSrc;
 
 const profileEditButton = document.querySelector(".profile__edit-btn");
 const cardModalButton = document.querySelector(".profile__add-btn");
@@ -94,6 +97,14 @@ const avatarFormElement = avatarModal.querySelector(".modal__form");
 const avatarModalSubmitBtn = avatarModal.querySelector(".modal__submit-btn");
 const avatarModalCloseBtn = avatarModal.querySelector(".modal__close-btn");
 const avatarModalLinkInput = avatarModal.querySelector("#profile-avatar-input");
+
+const deleteModal = document.querySelector("#delete-modal");
+const deleteFormElement = deleteModal.querySelector(".modal__form");
+const deleteModalCloseBtn = deleteModal.querySelector(".modal__close-btn");
+const deleteModalCancelBtn = deleteModal.querySelector(
+  ".modal__submit-btn_type_secondary"
+);
+let cardToDelete = null;
 
 const previewModal = document.querySelector("#preview-modal");
 const previewModalImgEl = previewModal.querySelector(".modal__image");
@@ -131,11 +142,27 @@ function getCardElement(data) {
   });
 
   cardDeleteBtn.addEventListener("click", () => {
-    cardElement.remove();
+    cardToDelete = cardElement;
+    openModal(deleteModal);
   });
 
   return cardElement;
 }
+
+deleteFormElement.addEventListener("submit", (evt) => {
+  evt.preventDefault();
+  cardToDelete.remove();
+  closeModal(deleteModal);
+  cardToDelete = null;
+});
+
+deleteModalCancelBtn.addEventListener("click", () => {
+  closeModal(deleteModal);
+});
+
+deleteModalCloseBtn.addEventListener("click", () => {
+  closeModal(deleteModal);
+});
 
 function keyHandler(evt) {
   if (evt.key === "Escape") {
@@ -194,10 +221,22 @@ function handleAddCardSubmit(event) {
 
 function handleAvatarSubmit(event) {
   event.preventDefault();
+  const avatarSubmitButton =
+    avatarFormElement.querySelector(".modal__submit-btn");
+  const originalButtonText = avatarSubmitButton.textContent;
+  avatarSubmitButton.textContent = "Saving...";
   api
-    .editAvatarInfo(avatarInput.value)
-    .then((data) => {})
-    .catch(console.error);
+    .editAvatarInfo(avatarModalLinkInput)
+    .then((data) => {
+      profileImg.src = data.avatar;
+      closeModal(avatarModal);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      avatarSubmitButton.textContent = originalButtonText;
+    });
 }
 
 profileEditButton.addEventListener("click", () => {
@@ -237,7 +276,7 @@ previewModalCloseBtn.addEventListener("click", () => {
 avatarModalButton.addEventListener("click", () => {
   openModal(avatarModal);
 });
-avatarForm.addEventListener("submit", handleAvatarSubmit);
+avatarFormElement.addEventListener("submit", handleAvatarSubmit);
 
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 cardFormElement.addEventListener("submit", handleAddCardSubmit);
