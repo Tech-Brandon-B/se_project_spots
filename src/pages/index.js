@@ -70,6 +70,7 @@ plusImg.src = plusSrc;
 
 const profileEditButton = document.querySelector(".profile__edit-btn");
 const cardModalButton = document.querySelector(".profile__add-btn");
+const avatarModalButton = document.querySelector(".profile__avatar-btn");
 const profileName = document.querySelector(".profile__name");
 const profileDesc = document.querySelector(".profile__description");
 
@@ -87,6 +88,12 @@ const cardModalSubmitBtn = cardModal.querySelector(".modal__submit-btn");
 const cardModalCloseBtn = cardModal.querySelector(".modal__close-btn");
 const cardModalNameInput = cardModal.querySelector("#add-card-name-input");
 const cardModalLinkInput = cardModal.querySelector("#add-card-link-input");
+
+const avatarModal = document.querySelector("#avatar-modal");
+const avatarFormElement = avatarModal.querySelector(".modal__form");
+const avatarModalSubmitBtn = avatarModal.querySelector(".modal__submit-btn");
+const avatarModalCloseBtn = avatarModal.querySelector(".modal__close-btn");
+const avatarModalLinkInput = avatarModal.querySelector("#profile-avatar-input");
 
 const previewModal = document.querySelector("#preview-modal");
 const previewModalImgEl = previewModal.querySelector(".modal__image");
@@ -185,6 +192,14 @@ function handleAddCardSubmit(event) {
   closeModal(cardModal);
 }
 
+function handleAvatarSubmit(event) {
+  event.preventDefault();
+  api
+    .editAvatarInfo(avatarInput.value)
+    .then((data) => {})
+    .catch(console.error);
+}
+
 profileEditButton.addEventListener("click", () => {
   editModalNameInput.value = profileName.textContent;
   editModalDescInput.value = profileDesc.textContent;
@@ -218,6 +233,11 @@ cardModalCloseBtn.addEventListener("click", () => {
 previewModalCloseBtn.addEventListener("click", () => {
   closeModal(previewModal);
 });
+
+avatarModalButton.addEventListener("click", () => {
+  openModal(avatarModal);
+});
+avatarForm.addEventListener("submit", handleAvatarSubmit);
 
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 cardFormElement.addEventListener("submit", handleAddCardSubmit);
