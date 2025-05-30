@@ -129,9 +129,21 @@ function getCardElement(data) {
   cardNameEl.textContent = data.name;
   cardImgEl.alt = data.name;
   cardImgEl.src = data.link;
+  cardElement.dataset.cardId = data._id;
+  cardElement.dataset.cardLike = data.isLiked;
 
   cardLikeBtn.addEventListener("click", () => {
-    cardLikeBtn.classList.toggle("card__like-btn_liked");
+    let cardLike = cardElement.dataset.cardLike;
+    if (cardLike === "true") {
+      cardLikeBtn.classList.remove("card__like-btn_liked");
+      cardLike = "false";
+      cardElement.dataset.cardLike = "false";
+    } else {
+      cardLikeBtn.classList.add("card__like-btn_liked");
+      cardLike = "true";
+      cardElement.dataset.cardLike = "true";
+    }
+    api.handleLike(cardId, cardLike);
   });
 
   cardImgEl.addEventListener("click", () => {
@@ -151,9 +163,24 @@ function getCardElement(data) {
 
 deleteFormElement.addEventListener("submit", (evt) => {
   evt.preventDefault();
-  cardToDelete.remove();
-  closeModal(deleteModal);
-  cardToDelete = null;
+  const deleteBtn = evt.submitter;
+  const originalButtonText = deleteBtn.textContent;
+  deleteBtn.textContent = "Deleting...";
+  const cardId = cardToDelete.dataset.cardId;
+
+  api
+    .deleteCard(cardId)
+    .then((data) => {
+      cardToDelete.remove();
+      closeModal(deleteModal);
+      cardToDelete = null;
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      deleteBtn.textContent = originalButtonText;
+    });
 });
 
 deleteModalCancelBtn.addEventListener("click", () => {
@@ -209,14 +236,27 @@ function handleEditFormSubmit(event) {
 
 function handleAddCardSubmit(event) {
   event.preventDefault();
-  const inputValues = {
-    name: cardModalNameInput.value,
-    link: cardModalLinkInput.value,
-  };
-  const cardElement = getCardElement(inputValues);
-  event.target.reset();
-  cardsList.prepend(cardElement);
-  closeModal(cardModal);
+  const submitButton = cardFormElement.querySelector(".modal__submit-btn");
+  const originalButtonText = submitButton.textContent;
+  submitButton.textContent = "Creating...";
+
+  api
+    .createCard({
+      name: cardModalNameInput.value,
+      link: cardModalLinkInput.value,
+    })
+    .then((cardData) => {
+      const cardElement = getCardElement(cardData);
+      cardsList.prepend(cardElement);
+      event.target.reset();
+      closeModal(cardModal);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      submitButton.textContent = originalButtonText;
+    });
 }
 
 function handleAvatarSubmit(event) {
