@@ -95,6 +95,8 @@
 
 .modal__title_type_delete {
   width: 590px;
+  font-size: 24px;
+  height: 24px;
 }
 
 .modal__label {

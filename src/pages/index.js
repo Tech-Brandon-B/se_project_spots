@@ -130,20 +130,29 @@ function getCardElement(data) {
   cardImgEl.alt = data.name;
   cardImgEl.src = data.link;
   cardElement.dataset.cardId = data._id;
-  cardElement.dataset.cardLike = data.isLiked;
+  cardElement.dataset.like = data.isLiked;
+  if (cardElement.dataset.like === "true") {
+    cardLikeBtn.classList.add("card__like-btn_liked");
+  } else {
+    cardLikeBtn.classList.remove("card__like-btn_liked");
+  }
 
   cardLikeBtn.addEventListener("click", () => {
-    let cardLike = cardElement.dataset.cardLike;
-    if (cardLike === "true") {
-      cardLikeBtn.classList.remove("card__like-btn_liked");
-      cardLike = "false";
-      cardElement.dataset.cardLike = "false";
-    } else {
-      cardLikeBtn.classList.add("card__like-btn_liked");
-      cardLike = "true";
-      cardElement.dataset.cardLike = "true";
-    }
-    api.handleLike(cardId, cardLike);
+    const cardLike = JSON.parse(cardElement.dataset.like);
+    api
+      .handleLike(cardElement.dataset.cardId, cardLike)
+      .then((data) => {
+        if (data.isLiked) {
+          cardLikeBtn.classList.add("card__like-btn_liked");
+          cardElement.dataset.like = "true";
+        } else {
+          cardLikeBtn.classList.remove("card__like-btn_liked");
+          cardElement.dataset.like = "false";
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   });
 
   cardImgEl.addEventListener("click", () => {
@@ -266,7 +275,7 @@ function handleAvatarSubmit(event) {
   const originalButtonText = avatarSubmitButton.textContent;
   avatarSubmitButton.textContent = "Saving...";
   api
-    .editAvatarInfo(avatarModalLinkInput)
+    .editAvatarInfo(avatarModalLinkInput.value)
     .then((data) => {
       profileImg.src = data.avatar;
       closeModal(avatarModal);
