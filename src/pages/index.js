@@ -55,7 +55,7 @@ api
 
     cards.forEach((item) => {
       const cardElement = getCardElement(item);
-      cardsList.prepend(cardElement);
+      cardsList.append(cardElement);
     });
   })
   .catch(console.error);
@@ -256,7 +256,7 @@ function handleAddCardSubmit(event) {
     })
     .then((cardData) => {
       const cardElement = getCardElement(cardData);
-      cardsList.prepend(cardElement);
+      cardsList.append(cardElement);
       event.target.reset();
       closeModal(cardModal);
     })
@@ -275,9 +275,10 @@ function handleAvatarSubmit(event) {
   const originalButtonText = avatarSubmitButton.textContent;
   avatarSubmitButton.textContent = "Saving...";
   api
-    .editAvatarInfo(avatarModalLinkInput.value)
+    .editAvatarInfo({ avatar: avatarModalLinkInput.value })
     .then((data) => {
       profileImg.src = data.avatar;
+      event.target.reset();
       closeModal(avatarModal);
     })
     .catch((err) => {
@@ -325,8 +326,12 @@ previewModalCloseBtn.addEventListener("click", () => {
 avatarModalButton.addEventListener("click", () => {
   openModal(avatarModal);
 });
-avatarFormElement.addEventListener("submit", handleAvatarSubmit);
 
+avatarModalCloseBtn.addEventListener("click", () => {
+  closeModal(avatarModal);
+});
+
+avatarFormElement.addEventListener("submit", handleAvatarSubmit);
 editFormElement.addEventListener("submit", handleEditFormSubmit);
 cardFormElement.addEventListener("submit", handleAddCardSubmit);
 
