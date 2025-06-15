@@ -131,6 +131,10 @@
   color: #212121;
 }
 
+.modal__label_type_avatar {
+  height: 78px;
+}
+
 .modal__input {
   padding: 16px 12px;
   height: 52px;
@@ -142,6 +146,10 @@
   font-size: 20px;
   line-height: 1;
   color: #212121;
+}
+
+.modal__input_type_avatar {
+  height: 18px;
 }
 
 .modal__input_type_error {
@@ -160,7 +168,6 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 110.00000000000001%;
-  margin-top: 8px;
 }
 
 .modal__submit-btn {
@@ -220,10 +227,20 @@
     padding: 12px;
   }
 
+  .modal__container_type_avatar {
+    width: 300px;
+    height: 222px;
+  }
+
   .modal__container_type_preview {
     width: 288px;
     padding: 0;
     max-width: 100%;
+  }
+
+  .modal__container_type_delete {
+    height: 208px;
+    width: 300px;
   }
 
   .modal__image {
@@ -234,6 +251,20 @@
   .modal__title {
     font-size: 20px;
     margin: 10px 0 34px;
+  }
+
+  .modal__title_type_avatar {
+    margin: 0 0 12px;
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .modal__title_type_delete {
+    margin: 0 0 20px;
+    height: 48px;
+    width: 276px;
+    font-size: 20px;
+    line-height: 1.2;
   }
 
   .modal__close-btn {
@@ -247,15 +278,33 @@
     padding: 0;
   }
 
+  .modal__close-btn_type_delete {
+    top: -48px;
+    right: 0;
+  }
+
   .modal__label {
     margin-bottom: 24px;
+  }
+
+  .modal__label_type_avatar {
+    margin-bottom: 20px;
   }
 
   .modal__input {
     font-size: 16px;
   }
 
+  .modal__input_type_avatar {
+    height: 14px;
+  }
+
   .modal__submit-btn {
     width: 100%;
+  }
+
+  .modal__button-container_type_delete {
+    flex-direction: column;
+    width: 156px;
   }
 }
