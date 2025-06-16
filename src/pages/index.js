@@ -256,7 +256,7 @@ function handleAddCardSubmit(event) {
     })
     .then((cardData) => {
       const cardElement = getCardElement(cardData);
-      cardsList.append(cardElement);
+      cardsList.prepend(cardElement);
       event.target.reset();
       closeModal(cardModal);
     })
